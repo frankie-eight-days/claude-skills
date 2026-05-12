@@ -1,0 +1,78 @@
+% Cover letter template — original design, compile with xelatex
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[left=0.9in,right=0.9in,top=0.7in,bottom=0.8in]{geometry}
+\usepackage{fontspec}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{parskip}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fontawesome5}
+\usepackage{enumitem}
+
+% --- Fonts ---
+% Helvetica is installed on macOS by default; Arial as a portable fallback.
+\IfFontExistsTF{Helvetica}{
+  \setmainfont{Helvetica}[Ligatures=TeX]
+}{
+  \IfFontExistsTF{Arial}{
+    \setmainfont{Arial}[Ligatures=TeX]
+  }{
+    \setmainfont{Latin Modern Sans}[Ligatures=TeX]
+  }
+}
+
+% --- Colors ---
+\definecolor{accent}{HTML}{1F4E5F}
+\definecolor{muted}{HTML}{666666}
+\definecolor{dark}{HTML}{2E2E2E}
+
+% --- Header block ---
+\newcommand{\headerblock}[4]{%
+  \begin{flushleft}
+    {\fontsize{24pt}{28pt}\selectfont\color{dark}\textbf{#1}}\\[1pt]
+    {\color{muted}\small #2 \quad\textbar\quad #3 \quad\textbar\quad #4}\\[2pt]
+  \end{flushleft}
+  {\color{accent}\rule{\linewidth}{1pt}}\\[4pt]
+}
+
+% --- Section header: colored bar + uppercased title ---
+% Use \MakeUppercase (expandable, plays nicely with color args) and put the
+% colored bar in the "before-code" so the title-case command doesn't touch it.
+\newcommand{\sectionbar}{\textcolor{accent}{\rule[-2pt]{5pt}{14pt}}\hspace{8pt}}
+\titleformat{\section}
+  {\color{accent}\large\bfseries}
+  {}
+  {0pt}
+  {\sectionbar\MakeUppercase}
+\titlespacing*{\section}{0pt}{10pt}{4pt}
+
+\setlist[itemize]{leftmargin=1.4em,topsep=2pt,itemsep=1pt}
+
+\pagestyle{empty}
+
+\begin{document}
+
+\headerblock{<<NAME>>}{\href{mailto:<<EMAIL>>}{<<EMAIL>>}}{<<PHONE>>}{<<LOCATION>>}
+
+{\color{muted}<<DATE>>}\\[6pt]
+\textbf{<<RECIPIENT>>}\\
+<<COMPANY>>\\
+<<COMPANY_ADDRESS>>\\[8pt]
+
+\noindent Dear <<RECIPIENT>>,
+
+\section*{About Me}
+<<ABOUT_ME>>
+
+\section*{Why <<COMPANY>>}
+<<WHY_COMPANY>>
+
+\section*{Why I'd Be a Good Fit}
+<<WHY_FIT>>
+
+\vspace{8pt}
+\noindent <<CLOSING>>,\\[14pt]
+\textbf{<<NAME>>}
+
+\end{document}
