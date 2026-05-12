@@ -75,6 +75,7 @@ Exit code is 0 if under threshold, 1 if over.
    - Adding rougher transitions ("On top of that", "Honestly", "Turns out").
    - Using more contractions where the register permits.
    - Mixing short fragments with longer sentences.
+   - **Stripping em-dashes (`—`).** ZeroGPT under-weights them, but they are the single most visible AI tell to a human reviewer. Replace with periods, commas, or restructure entirely.
 4. Re-score. Loop.
 5. Stop once under threshold OR after 6 iterations (report best score and ask the user for direction).
 
@@ -102,3 +103,14 @@ Sometimes humanization pulls the text too far toward casual. If the user specifi
 - Bullet lists tend to score higher than flowing prose. If the content can be prose, prefer prose.
 - Markdown headings count as "sentences" to the detector. Use `--strip-markdown` when scoring a markdown document to avoid noise.
 - ZeroGPT rate-limits free-tier keys. Space out calls if scoring many files in a row.
+
+## ZeroGPT's blind spots
+
+ZeroGPT's score is necessary but not sufficient. A draft can pass the 10% threshold and still read as AI to a human reviewer. The detector under-weights several tells that humans pick up on instantly:
+
+- **Em-dashes (`—`)** — *the* dead giveaway in 2025/2026 LLM output. The detector barely penalises them; humans clock them immediately. Default to zero em-dashes unless one is genuinely the cleanest punctuation choice.
+- **Perfectly balanced parallel structures** — "On the analog side... On the digital side..." / "Not only... but also..." / triplets that fall into rhythm. Real human writing varies more.
+- **Smooth connector phrases** — "maps directly onto", "lines up tightly with", "happens to be", "exactly the kind of". They polish too cleanly.
+- **Cliché commitment verbs** — "genuinely excited", "deeply passionate", "thrilled to" — universally read as AI in cover letters and similar professional writing.
+
+**Workflow:** treat the ZeroGPT score as the floor, not the ceiling. Even when a draft scores under threshold on iteration 1, do one editorial pass for the tells above before reporting it as done. If the rewrite changes the score, log both. If it doesn't, the rewrite was still worth doing — humans aren't running a detector.
