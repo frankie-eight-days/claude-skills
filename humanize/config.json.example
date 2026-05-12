@@ -1,0 +1,5 @@
+{
+  "api_key": "REPLACE_WITH_YOUR_ZEROGPT_API_KEY",
+  "threshold": 10,
+  "endpoint": "https://api.zerogpt.com/api/detect/detectText"
+}
